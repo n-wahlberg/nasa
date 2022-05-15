@@ -9,7 +9,7 @@ import sqlite3 as sql
 
 
 def get_key():
-    with open('apikey.txt') as f:
+    with open('apikeys/apikey.txt') as f:
         return f.read()
 
 
@@ -19,8 +19,8 @@ class Query:
     api_key = get_key()
     img_type = 'jpg'
 
-    # Takes basic params and generates a url for the query
-    def __init__(self, img_state, date="all"):
+    # Takes basic params and generates url for the query
+    def __init__(self, img_state="natural", date="all"):
         self.img_state = img_state
         if date != "all":
             self.year = date[:4]
@@ -72,6 +72,7 @@ def update_inhouse_data(query):
         if len(q.payload.json()) > 0:
             for item in q.payload.json():
                 new_data_list.append(item)
+                print(f"Data retrieved for {target_date}")
         else:
             print(f"No data available for {target_date}")
     with open('Data/natural/newRawData.json', 'w') as f:
